@@ -8,7 +8,7 @@ metadata:
 spec:
   type: NodePort
   ports:
-    - port: 8080
+    - port: 3000
       targetPort: 3000
       nodePort: 30001
   selector:
@@ -24,7 +24,7 @@ metadata:
 spec:
   type: LoadBalancer
   selector:
-    app: nodejs-app
+    type: app
   ports:
   - port: 8080
-    targetPort: 8080
+    targetPort: 3000
