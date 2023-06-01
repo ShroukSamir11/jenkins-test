@@ -3,7 +3,6 @@ kind: Deployment
 metadata:
   name: nodejs-app
 spec:
-  serviceAccountName: jenkins-user
   replicas: 2
   selector:
     matchLabels:

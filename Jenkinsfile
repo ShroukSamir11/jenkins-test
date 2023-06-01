@@ -1,8 +1,6 @@
 pipeline {
     agent any
-    environment {
-        DOCKERHUB = credentials('dockerhub-cred')
-    }
+    
     stages {
         stage('get repo') {
             steps {
@@ -11,7 +9,7 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t task-img .'
+                sh 'docker build -t shrouksamir11/task-img .'
 
             }
         }
@@ -19,8 +17,11 @@ pipeline {
         stage('Push Image')
         {
             steps{
-                sh 'echo $DOCKERHUB_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                sh 'docker push $DOCKERHUB_USR/task-img'
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-cred', passwordVariable: 'pass', usernameVariable: 'user')]) {
+                    sh 'echo $pass | docker login -u $user --password-stdin'
+                    sh 'docker push $user/task-img'
+                }
+                
             }
         }
         stage ('Create deployment and service'){
