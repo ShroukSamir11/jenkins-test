@@ -4,7 +4,7 @@ metadata:
   name: nodejs-app
   namespace: default
   labels:
-    type: app
+    app: jenkins
 spec:
   type: NodePort
   ports:
@@ -12,7 +12,7 @@ spec:
       targetPort: 3000
       nodePort: 30001
   selector:
-    type: app
+    app: jenkins
 
 ---
 apiVersion: v1
@@ -20,11 +20,11 @@ kind: Service
 metadata:
   name: app-svc
   labels:
-    type: app
+    app: jenkins
 spec:
   type: LoadBalancer
   selector:
-    type: app
+    app: jenkins
   ports:
   - port: 8080
     targetPort: 3000
